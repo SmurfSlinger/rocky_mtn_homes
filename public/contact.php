@@ -1,7 +1,8 @@
 <?php
+$page_title = "Contact Us";
+require_once('../private/includes/header.php');
 
-require_once('../private/includes/initialize.php');
-require_once(SHARED_PATH . '/header.php');
+
 
 ?>
 
@@ -22,3 +23,13 @@ require_once(SHARED_PATH . '/header.php');
 
 </form>
 </div>
+
+
+
+
+
+<?php
+
+require_once('../private/includes/footer.php');
+
+?>

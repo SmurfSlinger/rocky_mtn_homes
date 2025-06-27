@@ -1,5 +1,5 @@
 <?php
-(require_once('../includes/initialize.php'));
+
 class Admin extends DatabaseObject {
 
      static protected $table_name = "admins";

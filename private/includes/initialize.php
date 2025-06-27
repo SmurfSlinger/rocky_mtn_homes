@@ -13,9 +13,9 @@ define('WWW_ROOT', $web_root); // This will be something like "/yourproject/publ
 require_once('functions.php');
 require_once('db_functions.php');
 require_once('config.php');
-require_once('../classes/databaseobject.class.php');
-require_once('../classes/admin.class.php');
-require_once('../classes/home.class.php');
-require_once('../validation_functions.php');
+require_once(PROJECT_PATH . '/classes/databaseobject.class.php');
+require_once(PROJECT_PATH . '/classes/admin.class.php');
+require_once(PROJECT_PATH . '/classes/home.class.php');
+require_once('validation_functions.php');
 $database = db_connect('')
 ?>

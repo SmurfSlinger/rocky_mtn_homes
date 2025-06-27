@@ -1,7 +1,5 @@
 <?php
 
-require_once('../includes/initialize.php');
-
 class DatabaseObject {
 
     static protected $database;
