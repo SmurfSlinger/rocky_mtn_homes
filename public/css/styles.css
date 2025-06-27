@@ -1,0 +1,13 @@
+/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+.static {
+  position: static;
+}
+.flex {
+  display: flex;
+}
+.lowercase {
+  text-transform: lowercase;
+}
+.uppercase {
+  text-transform: uppercase;
+}

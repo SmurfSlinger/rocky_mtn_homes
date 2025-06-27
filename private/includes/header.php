@@ -8,16 +8,19 @@
 <head>
   <meta charset="UTF-8">
   <title><?php if(isset($page_title)){echo $page_title . " - ";}?>Rocky Mountain Home Sales</title>
-  <link rel="stylesheet" href="/css/styles.css">
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+
 </head>
 <body>
-  <header>
-    <h1>Rocky Mountain Homes</h1>
-    <nav>
-      <a href="../public/index.php">Home</a>
-      <a href="../public/inventory.php">Inventory</a>
-      <a href="../public/gallery.php">Gallery</a>
-      <a href="../public/contact.php">Contact</a>
-      <a href="../public/about.php">About Us</a>
-    </nav>
-  </header>
+<header class="bg-rose-900 text-white p-4 shadow-md">
+  <h1 class="text-3xl font-bold">Rocky Mountain Home Sales</h1>
+  <nav class="mt-2 flex gap-4 text-sm">
+    <a href="<?php echo url_for('index.php'); ?>" class="hover:text-amber-300">Home</a>
+    <a href="<?php echo url_for('inventory.php'); ?>" class="hover:text-amber-300">Inventory</a>
+    <a href="<?php echo url_for('gallery.php'); ?>" class="hover:text-amber-300">Gallery</a>
+    <a href="<?php echo url_for('contact.php'); ?>" class="hover:text-amber-300">Contact</a>
+    <a href="<?php echo url_for('about.php'); ?>" class="hover:text-amber-300">About</a>
+  </nav>
+</header>
