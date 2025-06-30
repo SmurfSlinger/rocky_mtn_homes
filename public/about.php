@@ -32,7 +32,7 @@ require_once('../private/includes/staff_footer.php');
 }
 else
 {
-  require_once('../private/includes/staff_footer.php');
+  require_once('../private/includes/footer.php');
 }
 
 ?>
