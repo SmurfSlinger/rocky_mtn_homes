@@ -26,8 +26,6 @@ $logged_in = isset($_SESSION['admin_id']);
 
         <button type="submit" style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; cursor: pointer;">Logout</button>
       </form>
-    <?php else: ?>
-      <a href="<?php echo url_for('/staff/login.php'); ?>">Login</a>
-    <?php endif; ?>
+      <?php endif;?>
   </div>
 </header>

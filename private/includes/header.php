@@ -1,7 +1,7 @@
 <?php require_once('initialize.php');
 
+$logged_in = isset($_SESSION['admin_id']);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,5 +22,8 @@
     <a href="<?php echo url_for('inventory.php'); ?>" class="hover:text-amber-300">Inventory</a>
     <a href="<?php echo url_for('contact.php'); ?>" class="hover:text-amber-300">Contact</a>
     <a href="<?php echo url_for('about.php'); ?>" class="hover:text-amber-300">About</a>
+     <?php if (!$logged_in): ?>
+      <a href="<?php echo url_for('/staff/login.php'); ?>" class="hover:text-amber-300 ">Login</a>
+    <?php endif; ?>
   </nav>
 </header>
