@@ -1,10 +1,24 @@
 <?php
+require_once('../private/includes/initialize.php');
+
 $page_title = "Contact Us";
-require_once('../private/includes/header.php');
+$logged_in = isset($_SESSION['admin_id']);
+if($logged_in){
+require_once('../private/includes/staff_header.php');
+}
+else
+{
+  require_once('../private/includes/header.php');
+}
 
 
 
 ?>
+
+<main>
+
+
+
 
 <div id = "main">
 
@@ -25,11 +39,18 @@ require_once('../private/includes/header.php');
 </div>
 
 
-
+</main>
 
 
 <?php
 
-require_once('../private/includes/footer.php');
+$logged_in = isset($_SESSION['admin_id']);
+if($logged_in){
+require_once('../private/includes/staff_footer.php');
+}
+else
+{
+  require_once('../private/includes/staff_footer.php');
+}
 
 ?>

@@ -9,6 +9,7 @@
   <meta charset="UTF-8">
   <title><?php if(isset($page_title)){echo $page_title . " - ";}?>Rocky Mountain Home Sales</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="<?php echo WWW_ROOT; ?>/css/styles.css" />
 
 
 
@@ -19,7 +20,6 @@
   <nav class="mt-2 flex gap-4 text-sm">
     <a href="<?php echo url_for('index.php'); ?>" class="hover:text-amber-300">Home</a>
     <a href="<?php echo url_for('inventory.php'); ?>" class="hover:text-amber-300">Inventory</a>
-    <a href="<?php echo url_for('gallery.php'); ?>" class="hover:text-amber-300">Gallery</a>
     <a href="<?php echo url_for('contact.php'); ?>" class="hover:text-amber-300">Contact</a>
     <a href="<?php echo url_for('about.php'); ?>" class="hover:text-amber-300">About</a>
   </nav>

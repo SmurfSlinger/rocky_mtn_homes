@@ -1,5 +1,14 @@
 <?php
-require_once('../private/includes/header.php');
+require_once('../private/includes/initialize.php');
+
+$logged_in = isset($_SESSION['admin_id']);
+if($logged_in){
+require_once('../private/includes/staff_header.php');
+}
+else
+{
+  require_once('../private/includes/header.php');
+}
 
 
 
@@ -13,7 +22,7 @@ require_once('../private/includes/header.php');
 
 <div id="gallery">
 
-<a href="<?php echo url_for('gallery.php'); ?>">View Gallery</a>
+<a href="<?php echo url_for('gallery.php'); ?>" class="hover:text-amber-300">View Gallery</a>
 
 
 </div>
@@ -24,6 +33,13 @@ require_once('../private/includes/header.php');
 
 <?php
 
-require_once('../private/includes/footer.php');
+$logged_in = isset($_SESSION['admin_id']);
+if($logged_in){
+require_once('../private/includes/staff_footer.php');
+}
+else
+{
+  require_once('../private/includes/staff_footer.php');
+}
 
 ?>
