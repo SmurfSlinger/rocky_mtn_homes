@@ -20,15 +20,6 @@ else
 </main>
 
 
-<div id="gallery">
-
-<a href="<?php echo url_for('gallery.php'); ?>" class="hover:text-amber-300">View Gallery</a>
-
-
-</div>
-
-
-
 
 
 <?php
