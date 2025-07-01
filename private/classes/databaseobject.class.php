@@ -108,8 +108,7 @@ class DatabaseObject {
   $sql .= join("', '", array_values($attributes));
   $sql .= "')";
 
-  // DEBUGGING:
-  echo "<pre>$sql</pre>"; // Show the generated SQL
+ 
   $result = self::$database->query($sql);
 
   if (!$result) {

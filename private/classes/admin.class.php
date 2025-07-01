@@ -24,6 +24,10 @@ class Admin extends DatabaseObject {
     $this->confirm_password = $args['confirm_password'] ?? '';
     }
 
+    public function set_password_required($bool)
+    {
+      $this->password_required = $bool;
+    }
     
      public function full_name() {
     return $this->first_name . " " . $this->last_name;
@@ -45,21 +49,18 @@ class Admin extends DatabaseObject {
     return parent::create();
   }
 
-  public function update()
-  {
-    if($this->password != '')
-    {
-      $this->set_hashed_password();
-      // validate password
+ public function update()
+{
+    if($this->password !== '') {
+        $this->set_hashed_password();
+    } else {
+        $this->password_required = false;
     }
-    else
-    {
-      // password not being updated, skip hashing and validation
-      $this->password_required = false;
-    }
-    
-    return parent::create();
-  }
+
+    return parent::update(); // <-- call update, NOT create
+}
+
+  
 
   protected function validate() 
   {

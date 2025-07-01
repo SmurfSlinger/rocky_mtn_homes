@@ -11,6 +11,8 @@ if (!is_post_request()) {
   redirect_to(url_for('/staff/homes/new.php'));
 }
 
+$page_title = "Create Home -- Staff Area";
+
 $args = [];
 $args['title'] = $_POST['title'] ?? '';
 $args['price'] = $_POST['price'] ?? '';

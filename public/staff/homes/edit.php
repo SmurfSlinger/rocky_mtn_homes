@@ -80,12 +80,12 @@ if (!$home->validate()) {
 require_once(SHARED_PATH . '/staff_header.php');
 ?>
 
-<main class="p-6">
-  <h1 class="text-2xl font-bold mb-4">Edit Home</h1>
+<main class="max-w-4xl mx-auto mt-16 bg-white shadow-xl rounded-xl p-10 border border-gray-200">
+  <h1 class="text-4xl font-extrabold text-blue-700 mb-8 text-center">Edit Home Listing</h1>
 
   <?php if (!empty($errors)): ?>
-    <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-      <ul class="list-disc list-inside">
+    <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+      <ul class="list-disc pl-5">
         <?php foreach ($errors as $error): ?>
           <li><?php echo h($error); ?></li>
         <?php endforeach; ?>
@@ -93,94 +93,118 @@ require_once(SHARED_PATH . '/staff_header.php');
     </div>
   <?php endif; ?>
 
-  <form action="<?php echo url_for('/staff/homes/edit.php?id=' . h(u($id))); ?>" method="post" enctype="multipart/form-data">
+  <form action="<?php echo url_for('/staff/homes/edit.php?id=' . h(u($id))); ?>" method="post" enctype="multipart/form-data" class="space-y-6">
+
+    <a href="<?php echo url_for('/staff/homes/index.php'); ?>" class="inline-block text-sm text-blue-600 hover:underline">&laquo; Back to Homes</a>
 
     <!-- Title -->
-    <label for="title" class="block font-semibold">Title</label>
-    <input type="text" name="title" value="<?php echo h($home->get_title()); ?>" class="w-full p-2 mb-4 border rounded" required>
-
-    <!-- Price -->
-    <label for="price" class="block font-semibold">Price</label>
-    <input type="number" name="price" value="<?php echo h($home->get_price()); ?>" class="w-full p-2 mb-4 border rounded" min="0" step="0.01" required>
-
-    <!-- Square Footage -->
-    <label for="square_footage" class="block font-semibold">Square Footage</label>
-    <input type="number" name="square_footage" value="<?php echo h($home->get_square_footage()); ?>" class="w-full p-2 mb-4 border rounded" min="0" required>
-
-    <!-- Dimensions -->
-    <label class="block font-semibold">Dimensions (ft)</label>
-    <div class="flex gap-2 mb-4">
-      <input type="number" name="length_ft" value="<?php echo h($home->get_length_ft()); ?>" class="p-2 border rounded w-1/3" placeholder="Length" min="0" required>
-      <input type="number" name="width_ft" value="<?php echo h($home->get_width_ft()); ?>" class="p-2 border rounded w-1/3" placeholder="Width" min="0" required>
-      <input type="number" name="height_ft" value="<?php echo h($home->get_height_ft()); ?>" class="p-2 border rounded w-1/3" placeholder="Height" min="0" required>
+    <div>
+      <label class="block text-sm font-semibold mb-1">Title</label>
+      <input type="text" name="title" value="<?php echo h($home->get_title()); ?>" class="w-full p-3 border rounded-md" required>
     </div>
 
-    <!-- Bedrooms -->
-    <label for="bedrooms" class="block font-semibold">Bedrooms</label>
-    <input type="number" name="bedrooms" value="<?php echo h($home->get_bedrooms()); ?>" min="0" class="w-full p-2 mb-4 border rounded" required placeholder="Number of bedrooms" />
+    <!-- Price -->
+    <div>
+      <label class="block text-sm font-semibold mb-1">Price ($)</label>
+      <input type="number" name="price" value="<?php echo h($home->get_price()); ?>" min="0" step="0.01" class="w-full p-3 border rounded-md" required>
+    </div>
 
-    <!-- Bathrooms -->
-    <label for="bathrooms" class="block font-semibold">Bathrooms</label>
-    <input type="number" name="bathrooms" value="<?php echo h($home->get_bathrooms()); ?>" min="0" step="0.5" class="w-full p-2 mb-4 border rounded" required placeholder="Number of bathrooms" />
+    <!-- Square Footage & Dimensions -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-semibold mb-1">Square Footage</label>
+        <input type="number" name="square_footage" value="<?php echo h($home->get_square_footage()); ?>" class="w-full p-3 border rounded-md" min="0" required>
+      </div>
 
-    <!-- Washer/Dryer Hookups -->
-    <label class="block mb-2">
-      <input type="checkbox" name="has_washer_dryer_hookups" <?php if ($home->get_has_washer_dryer_hookups()) echo 'checked'; ?> />
-      Washer/Dryer Hookups
-    </label>
+      <div>
+        <label class="block text-sm font-semibold mb-1">Dimensions (L x W x H in ft)</label>
+        <div class="flex gap-2">
+          <input type="number" name="length_ft" value="<?php echo h($home->get_length_ft()); ?>" class="w-1/3 p-3 border rounded-md" placeholder="Length" min="0" required>
+          <input type="number" name="width_ft" value="<?php echo h($home->get_width_ft()); ?>" class="w-1/3 p-3 border rounded-md" placeholder="Width" min="0" required>
+          <input type="number" name="height_ft" value="<?php echo h($home->get_height_ft()); ?>" class="w-1/3 p-3 border rounded-md" placeholder="Height" min="0" required>
+        </div>
+      </div>
+    </div>
 
-    <!-- Air Conditioning -->
-    <label class="block mb-2">
-      <input type="checkbox" name="has_ac" <?php if ($home->get_has_ac()) echo 'checked'; ?> />
-      Air Conditioning
-    </label>
+    <!-- Bedrooms and Bathrooms -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-semibold mb-1">Bedrooms</label>
+        <input type="number" name="bedrooms" value="<?php echo h($home->get_bedrooms()); ?>" class="w-full p-3 border rounded-md" min="0" required>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1">Bathrooms</label>
+        <input type="number" name="bathrooms" value="<?php echo h($home->get_bathrooms()); ?>" class="w-full p-3 border rounded-md" min="0" step="0.5" required>
+      </div>
+    </div>
 
-    <!-- Furnace -->
-    <label class="block mb-2">
-      <input type="checkbox" name="has_furnace" <?php if ($home->get_has_furnace()) echo 'checked'; ?> />
-      Furnace
-    </label>
-
-    <!-- Includes Appliances -->
-    <label class="block mb-4">
-      <input type="checkbox" name="includes_appliances" <?php if ($home->get_includes_appliances()) echo 'checked'; ?> />
-      Includes Appliances
-    </label>
+    <!-- Checkboxes -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <label class="inline-flex items-center">
+        <input type="checkbox" name="has_washer_dryer_hookups" <?php if ($home->get_has_washer_dryer_hookups()) echo 'checked'; ?> class="mr-2">
+        Washer/Dryer Hookups
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" name="has_ac" <?php if ($home->get_has_ac()) echo 'checked'; ?> class="mr-2">
+        Air Conditioning
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" name="has_furnace" <?php if ($home->get_has_furnace()) echo 'checked'; ?> class="mr-2">
+        Furnace
+      </label>
+      <label class="inline-flex items-center">
+        <input type="checkbox" name="includes_appliances" <?php if ($home->get_includes_appliances()) echo 'checked'; ?> class="mr-2">
+        Includes Appliances
+      </label>
+    </div>
 
     <!-- Flooring Type -->
-    <label for="flooring_type" class="block font-semibold">Flooring Type</label>
-    <input type="text" name="flooring_type" value="<?php echo h($home->get_flooring_type()); ?>" class="w-full p-2 mb-4 border rounded" required placeholder="Flooring type" />
+    <div>
+      <label class="block text-sm font-semibold mb-1">Flooring Type</label>
+      <input type="text" name="flooring_type" value="<?php echo h($home->get_flooring_type()); ?>" class="w-full p-3 border rounded-md" required>
+    </div>
 
     <!-- Year Built -->
-    <label for="year_built" class="block font-semibold">Year Built</label>
-    <input type="number" name="year_built" value="<?php echo h($home->get_year_built()); ?>" min="1800" max="<?php echo date('Y'); ?>" class="w-full p-2 mb-4 border rounded" required placeholder="Year built" />
+    <div>
+      <label class="block text-sm font-semibold mb-1">Year Built</label>
+      <input type="number" name="year_built" value="<?php echo h($home->get_year_built()); ?>" min="1800" max="<?php echo date('Y'); ?>" class="w-full p-3 border rounded-md" required>
+    </div>
 
-    <!-- Extras / Comments -->
-    <label for="extras" class="block font-semibold">Extras / Comments</label>
-    <textarea name="extras" rows="3" class="w-full p-2 mb-4 border rounded" placeholder="Additional features or comments"><?php echo h($home->get_extras()); ?></textarea>
+    <!-- Extras -->
+    <div>
+      <label class="block text-sm font-semibold mb-1">Extras / Comments</label>
+      <textarea name="extras" rows="2" class="w-full p-3 border rounded-md"><?php echo h($home->get_extras()); ?></textarea>
+    </div>
 
     <!-- Description -->
-    <label for="description" class="block font-semibold">Description</label>
-    <textarea name="description" rows="3" class="w-full p-2 mb-4 border rounded" required placeholder="Describe the home"><?php echo h($home->get_description()); ?></textarea>
+    <div>
+      <label class="block text-sm font-semibold mb-1">Description</label>
+      <textarea name="description" rows="3" class="w-full p-3 border rounded-md" required><?php echo h($home->get_description()); ?></textarea>
+    </div>
 
     <!-- Status -->
-    <label for="status" class="block font-semibold">Status</label>
-    <select name="status" class="w-full p-2 mb-6 border rounded" required>
-      <option value="">Select status</option>
-      <option value="available" <?php if ($home->get_status() === 'available') echo 'selected'; ?>>Available</option>
-      <option value="sold" <?php if ($home->get_status() === 'sold') echo 'selected'; ?>>Sold</option>
-    </select>
+    <div>
+      <label class="block text-sm font-semibold mb-1">Status</label>
+      <select name="status" class="w-full p-3 border rounded-md" required>
+        <option value="">Select status</option>
+        <option value="available" <?php if ($home->get_status() === 'available') echo 'selected'; ?>>Available</option>
+        <option value="sold" <?php if ($home->get_status() === 'sold') echo 'selected'; ?>>Sold</option>
+      </select>
+    </div>
 
-    <!-- Image -->
-    <label for="image" class="block font-semibold">Replace Cover Photo</label>
-    <input type="file" name="image" class="w-full p-2 mb-4 border rounded" />
+    <!-- Cover Photo -->
+    <div>
+      <label class="block text-sm font-semibold mb-1">Replace Cover Photo</label>
+      <input type="file" name="image" class="w-full p-3 border rounded-md">
+    </div>
 
+    <!-- CSRF & Submit -->
     <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-
-
-    <!-- Submit -->
-    <input type="submit" value="Update Home" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" />
+    <div class="text-right">
+      <input type="submit" value="Update Home" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+    </div>
   </form>
 </main>
+
 
 <?php require_once(SHARED_PATH . '/staff_footer.php'); ?>

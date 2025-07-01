@@ -43,5 +43,8 @@ require_once(PROJECT_PATH . '/private/classes/home.class.php');
 require_once(PROJECT_PATH . '/private/classes/homeimage.class.php');
 require_once('validation_functions.php');
 $database = db_connect();
+DatabaseObject::set_database($database);
 Home::set_database($database);
+HomeImage::set_database($database);
+Admin::set_database($database);
 ?>

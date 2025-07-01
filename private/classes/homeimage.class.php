@@ -59,7 +59,7 @@ class HomeImage extends DatabaseObject {
 public function delete() {
   $sql = "DELETE FROM " . static::$table_name . " WHERE id='" . self::$database->escape_string($this->id) . "' LIMIT 1";
   $result = self::$database->query($sql);
-  return $result && self::$database->affected_rows() == 1;
+  return $result && self::$database->affected_rows == 1;
 }
 
 }

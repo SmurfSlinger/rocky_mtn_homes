@@ -6,6 +6,7 @@ require_once('../../../private/includes/staff_header.php');
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     redirect_to(url_for('/staff/login.php'));
 }
+$page_title = "Create New Home -- Staff Area";
 ?>
 
 
@@ -40,7 +41,9 @@ if(isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
   <h1 class="text-2xl font-bold mb-4">Add New Home</h1>
 
  <form method="POST" action="create.php" enctype="multipart/form-data" class="space-y-4">
-
+<p class="mb-4">
+  <a href="<?php echo url_for('/staff/homes/index.php'); ?>" class="text-blue-600 hover:underline">&laquo; Back to Homes</a>
+</p>
   <label>
     Title:
     <input type="text" name="title" class="w-full p-2 border rounded" required placeholder="Enter home title">

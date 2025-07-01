@@ -3,7 +3,7 @@ require_once('../../../private/includes/initialize.php');
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     redirect_to(url_for('/staff/login.php'));
 }
-
+$page_title = "Add Images -- Staff Area";
 $home_id = $_GET['home_id'] ?? '';
 $home = Home::find_by_id($home_id);
 /** @var \Home $home */

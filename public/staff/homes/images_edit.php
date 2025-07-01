@@ -3,7 +3,7 @@ require_once('../../../private/includes/initialize.php');
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     redirect_to(url_for('/staff/login.php'));
 }
-
+$page_title = "Edit Images -- Staff Area";
 $id = $_GET['id'] ?? '';
 $home_id = $_GET['home_id'] ?? '';
 

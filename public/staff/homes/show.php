@@ -4,7 +4,7 @@ require_once('../../../private/includes/initialize.php');
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     redirect_to(url_for('/staff/login.php'));
 }
-
+$page_title = "Show Home -- Staff Area";
 $id = $_GET['id'] ?? '0';
 $home = Home::find_by_id($id);
 /** @var \Home $home */

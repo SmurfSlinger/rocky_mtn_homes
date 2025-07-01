@@ -1,4 +1,5 @@
 <?php
+$page_title = "Staff Area";
 require_once('../../../private/includes/initialize.php');
 require_once('../../../private/includes/staff_header.php');
 

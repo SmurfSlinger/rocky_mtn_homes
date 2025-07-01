@@ -3,6 +3,7 @@ require_once('../../../private/includes/initialize.php');
 if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
     redirect_to(url_for('/staff/login.php'));
 }
+$page_title = "Images -- Staff Area";
 
 $home_id = $_GET['home_id'] ?? '';
 $home = Home::find_by_id($home_id);
@@ -44,7 +45,7 @@ require_once(SHARED_PATH . '/staff_header.php');
   </div>
 
   <a href="<?php echo url_for('/staff/homes/images_new.php?home_id=' . u($home->id)); ?>" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Upload New Image</a>
-  <p class="mt-4"><a href="<?php echo url_for('/staff/homes/index.php'); ?>" class="text-blue-600 hover:underline">&laquo; Back to Homes</a></p>
+  <p class="mt-4"><a href="<?php echo url_for('inventory.php'); ?>" class="text-blue-600 hover:underline">&laquo; Back to Inventory</a></p>
 </main>
 
 <?php

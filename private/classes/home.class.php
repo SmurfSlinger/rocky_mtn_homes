@@ -3,7 +3,6 @@
 
 class Home extends DatabaseObject{
 
-    static protected $database = "rocky_mtn_homes";
     static protected $table_name = 'homes';
     static protected $db_columns = [
     'id', 'title', 'price', 'square_footage',
@@ -289,6 +288,27 @@ public function set_height_ft($value) {
     $this->height_ft = is_numeric($value) ? (float)$value : null;
 }
 
+public function delete() {
+    $id = self::$database->escape_string($this->id);
+
+    // First, delete associated images
+    $sql_images = "DELETE FROM home_images WHERE home_id = '{$id}'";
+    $result_images = self::$database->query($sql_images);
+    if (!$result_images) {
+        return false;
+    }
+
+    // Then, delete the home itself
+    $sql = "DELETE FROM " . static::$table_name;
+    $sql .= " WHERE id='{$id}' ";
+    $sql .= "LIMIT 1";
+
+    $result_home = self::$database->query($sql);
+    return $result_home;
+}
+public static function get_database() {
+    return self::$database;
+}
 
 
 
