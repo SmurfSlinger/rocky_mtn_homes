@@ -1,0 +1,28 @@
+# Staged cutover config — installed to /etc/caddy/Caddyfile.next during prep.
+# TLS files under /etc/caddy/certs/ (root:caddy 640) — created by install-and-stage.sh
+# Activate at cutover: sudo cp /etc/caddy/Caddyfile.next /etc/caddy/Caddyfile && sudo systemctl enable --now caddy
+#
+# Note: apt Caddy has no "trusted_proxies cloudflare" plugin. Cloudflare still
+# sets CF-Connecting-IP; apps can use that if real client IP matters.
+
+rockymountainhomesales.com, www.rockymountainhomesales.com {
+	tls /etc/caddy/certs/rockymountainhomesales.com-fullchain.pem /etc/caddy/certs/rockymountainhomesales.com-privkey.pem
+
+	encode gzip zstd
+
+	reverse_proxy 127.0.0.1:3002 {
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Host {host}
+	}
+}
+
+photographybypiv.com, www.photographybypiv.com {
+	tls /etc/caddy/certs/photographybypiv.com.pem /etc/caddy/certs/photographybypiv.com.key
+
+	encode gzip zstd
+
+	reverse_proxy 127.0.0.1:3000 {
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Host {host}
+	}
+}

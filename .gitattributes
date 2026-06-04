@@ -1,0 +1,5 @@
+*.sh text eol=lf
+scripts/** text eol=lf
+deploy/caddy/* text eol=lf
+.env.example text eol=lf
+.env.local text eol=lf

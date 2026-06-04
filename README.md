@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rocky Mountain Homes (Next.js)
 
-## Getting Started
+Next.js App Router migration of the Rocky Mountain Home Sales site.
 
-First, run the development server:
+## Getting started
 
 ```bash
+cd /var/www/rocky-mountain-homes-next
+cp .env.example .env.local   # add DATABASE_* credentials
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Inventory and home detail pages read from the existing MySQL database (`rocky_mtn_homes`). Configure credentials via `.env.local` (see `.env.example`).
 
-## Learn More
+**Static site images** (logo, home hero, about photo) live in `public/css/images/` — copied from the legacy PHP `public/css/images/` tree.
 
-To learn more about Next.js, take a look at the following resources:
+**Listing photos** are served from `public/images/homes` when present, otherwise from `LEGACY_PHP_PUBLIC_PATH` (defaults to the PHP `public` folder) via `/images/homes/[...path]`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Staff authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Login: http://localhost:3000/staff/login
+- Protected routes: `/staff/*` except `/staff/login`
+- Session cookie: signed JWT with `{ adminId, username }` only (no password hash)
+- Set `AUTH_SECRET` in `.env.local` (32+ random characters)
 
-## Deploy on Vercel
+### Contact form email
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The `/contact` form sends mail via Nodemailer using SMTP settings in `.env.local` (`SMTP_*`, `CONTACT_FROM_*`, `CONTACT_TO_EMAIL`). Credentials stay on the server only.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Run production server |
+| `npm run lint` | ESLint |
+
+## Public routes
+
+- `/` — Home
+- `/inventory` — Listings (MySQL)
+- `/homes/[id]` — Home detail
+- `/contact` — Contact form
+- `/about` — About page
+
+Legacy PHP site: `rockymountainhomesales/software_dev/rocky_mtn_homes`
+
+## Deployment
+
+- [Caddy migration plan (replace k3s Traefik)](docs/CADDY_MIGRATION_PLAN.md)
+- [HTTPS / Cloudflare / Traefik on this host](docs/DEPLOYMENT_HTTPS_TRAEFIK.md)
+- [Server setup examples (systemd + Apache)](docs/DEPLOYMENT_SERVER_SETUP.md)
+- [Production environment variables](docs/PRODUCTION_ENV.md)
+- [Migration cutover checklist](docs/MIGRATION_CHECKLIST.md)
+- [Security audit](docs/SECURITY_AUDIT.md)
+
+Legacy `.php` URLs redirect to App Router paths via `next.config.ts` (see `lib/redirects/php-legacy.ts`).

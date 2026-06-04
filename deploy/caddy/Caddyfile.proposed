@@ -1,0 +1,63 @@
+# Proposed Caddy configuration — NOT installed yet.
+# Install path when ready: sudo cp deploy/caddy/Caddyfile.proposed /etc/caddy/Caddyfile
+# See docs/CADDY_MIGRATION_PLAN.md for cutover and TLS options.
+
+{
+	# Optional: ACME contact email (uncomment when using automatic HTTPS)
+	# email admin@example.com
+
+	# Real client IP behind Cloudflare: apt caddy lacks trusted_proxies cloudflare.
+	# Use CF-Connecting-IP in apps, or trusted_proxies static <Cloudflare CIDRs>, or xcaddy CDN plugin.
+}
+
+# --- Rocky Mountain Homes (Next.js systemd :3002) ---
+rockymountainhomesales.com, www.rockymountainhomesales.com {
+	# TLS option 1 (recommended for first cutover): existing Certbot files on disk
+	# Uncomment after verifying paths exist (sudo ls /etc/letsencrypt/live/rockymountainhomesales.com/)
+	# tls /etc/letsencrypt/live/rockymountainhomesales.com/fullchain.pem /etc/letsencrypt/live/rockymountainhomesales.com/privkey.pem
+
+	# TLS option 2: Caddy automatic HTTPS (Let's Encrypt)
+	# Requires port 443 (and usually 80) on Caddy, or Cloudflare DNS-01 with API token.
+	# See docs/CADDY_MIGRATION_PLAN.md — do not use HTTP-01 with orange-cloud proxy without DNS challenge.
+
+	encode gzip zstd
+
+	reverse_proxy 127.0.0.1:3002 {
+		# Host is preserved by default; Next.js sees correct hostname.
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Host {host}
+	}
+}
+
+# --- Photography by Piv (Next.js systemd :3000) ---
+photographybypiv.com, www.photographybypiv.com {
+	# TLS option 1 (recommended for first cutover): Cloudflare origin certificate files
+	# (same paths as Apache vhost photographybypiv.com.conf)
+	# tls /etc/ssl/cloudflare/photographybypiv.com.pem /etc/ssl/cloudflare/photographybypiv.com.key
+
+	# TLS option 2: Caddy automatic HTTPS — only if you migrate off Cloudflare origin certs.
+
+	encode gzip zstd
+
+	reverse_proxy 127.0.0.1:3000 {
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Forwarded-Host {host}
+	}
+}
+
+# --- Kyler Gundersen (static; Apache DocumentRoot on SSL vhost) ---
+# SSL vhost used: /var/www/kylergundersen (currently empty — verify before enabling this site)
+kylergundersen.com, www.kylergundersen.com {
+	# tls /etc/letsencrypt/live/kylergundersen.com/fullchain.pem /etc/letsencrypt/live/kylergundersen.com/privkey.pem
+
+	root * /var/www/kylergundersen
+	file_server
+
+	# If site content actually lives under /var/www/html, change root to that path instead.
+}
+
+# --- Optional: HTTP→HTTPS redirects for RMH (Apache today uses :8080 for this) ---
+# After Caddy owns :80, you can add:
+# http://rockymountainhomesales.com, http://www.rockymountainhomesales.com {
+# 	redir https://{host}{uri} permanent
+# }
